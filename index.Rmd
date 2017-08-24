@@ -1,0 +1,196 @@
+---
+title: "Dynamically accessing SharePoint Content from R"
+output:
+  html_notebook: default
+  html_document: default
+---
+
+```{r include=FALSE}
+library(httr)
+library(secret)
+library(printr)
+
+tmp_contents <- dget("tmp_contents_dput")
+```
+
+
+# Motivating Problem
+
+A new project required downloading a list of all spreadsheet files (i.e. in `.xlsx` format) that meet certain criteria (i.e. a specific document type) on a SharePoint 2010 site.  For illustration, suppose this link is something like <https://mysharepointsite.com/sites/CoolTeam/Documents/Complicated%20Stuff/Forms/AllItems.aspx> and the team only wants the spreadsheet files (in `.xlsx` format) under the __Project Requirements__ category.  The team wants to use R to process each of these spreadsheet files to grab certain components, and then create an integrated summary data set that will eventually be served by a Shiny application.
+
+This document covers key aspects of a solution such as: 
+
+* How to deal with authentication to Microsoft servers from a separate linux server on an internal network
+* Obtaining a more "web-scraping" friendly format of a list of files stored on a SharePoint site
+* Storing and passing authentication credentials securely within an R programming pipeline
+* Using [tidyverse](http://www.tidyverse.org) packages such as [dplyr](http://dplyr.tidyverse.org) and [purrr](http://purrr.tidyverse.org) to process complicated structures of the scraped content and create a tidy data frame for further processing.
+
+# Authentication to SharePoint from Linux
+
+This solution is geared towards accessing SharePoint content from a linux server that is separate from the server that hosts the SharePoint site content.  In most enterprise environments, the authentication to Microsoft servers is treated separately from authentication to other servers on an internal network such as linux servers, even if the logins are shared via Active Directory.  In other words, if you are connected to a linux server and want to access content from a SharePoint site, you will need to pass additional authentication credentials to any command trying to access this content.  For example, say a user named Jon (who belongs to the `AZ` active directory domain) is connected to a Linux server on their enterprise network with a user ID of `aaa123` and their own password of `ReallySecurePassword` (of course your password should be much more secure than that).  One popular utility to obtain content from a web server is the [curl](https://www.lifewire.com/curl-definition-2184508) command.  In general, one can use the following `curl` command structure to authenticate to a SharePoint site and access content:
+
+```
+curl -v --ntlm -u '<ad_prefix>\<user_name>:<password>' <url>
+```
+
+where `<ad_prefix>` is the user's Active Directory domain, `<user_name>` is the user name, `<password>` is the user's password, and `<url>` is the URL of interest.   The `--ntlm` flag ensures that the [NTML authetication protocol](https://curl.haxx.se/rfc/ntlm.html#whatIsNtlm) is used by `curl` instead of default authentication mechanisms.  In short this protocol is used by various Microsoft network protocols.  
+
+Jon could authenticate to a Sharepoint site using a command like the following: 
+
+```
+curl -v --ntlm -u 'AZ\aaa123:ReallySecurePassword' <sharepoint_url>
+```
+
+# Securely storing and using sensitive information in R
+
+It is typically bad practice to enter passwords directly in R scripts, so one approach is to use a relatively new package called [secret](https://github.com/gaborcsardi/secret#readme).  The package makes use of SSH keys in order to encrypt/decrypt credentials.  Creating SSH keys can be done within the RStudio IDE.  Adapting instructions from the `secret` package [vignette](https://cran.rstudio.com/web/packages/secret/vignettes/secrets.html) here is how you can create a custom vault in your Linux home directory to store sensitive information such as passwords.  Note that it is recommended to run this block of code without saving to a file since this is a one-time setup of your vault.  Continuing with our example, here is how the user Jon would initially create his vault (assuming he already created an SSH key):
+
+```{r, eval = FALSE}
+library(secret)
+
+user_name <- "aaa123"
+vault <- "~/.vault"
+my_public_key <- "~/.ssh/id_rsa.pub"
+
+# use this code to create a fresh vault
+if (!file.exists(vault)) {
+  dir.create(vault)
+  create_vault(vault)
+  my_password <- "ReallySecurePassword"
+  add_secret("server_password", my_password, users = user_name, vault = vault)
+}
+
+# use this code to create a new user if the vault is "fresh"
+vault_users <- list_users(vault = vault)
+if (!user_name %in% vault_users) {
+  add_user(user_name, my_public_key, vault = vault)
+}
+
+```
+
+Now Jon will be able to obtain his password securely using the `get_secret` function like so:
+
+```{r eval=FALSE}
+my_private_key <- "~/.ssh/id_rsa"
+vault <- "~/.vault"
+get_secret("server_password", key = my_private_key, vault = vault)
+```
+
+# Obtaining scraper-friendly list of SharePoint Files
+
+One interesting feature of SharePoint is the ability to access an XML version of a library of document types using a slightly different URL structure.  For this example, the XML version of the file list would be available at <https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff>.  
+
+Instead of having to run the `curl` command inside R via a `system` call, we can use the powerful [httr](http://httr.r-lib.org) package to use `curl` under the hood.  Using the authentication principles outlined above, Jon can obtain the XML-formatted list of the files and their attributes by using the `GET` function from `httr` like so:
+
+```{r eval=FALSE}
+library(httr)
+
+user_name <- "aaa123"
+my_private_key <- "~/.ssh/id_rsa"
+vault <- "~/.vault"
+site_url <- "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff"
+result <- httr::GET(site_url, 
+                    authenticate(user = sprintf("AZ\\%s", user_name), 
+                                 password = get_secret("server_password", key = my_private_key, vault = vault), 
+                                 type = 'ntlm'))
+
+# checking status of request
+http_status(result)
+
+# obtain a parsed version of the contents, which results in deeply nested list objects
+tmp_contents <- content(result, "parsed")
+```
+
+# Exploring and processing the results
+
+There is some processing required to make this list of results usable and ready for exploring.  We will use lessons and tips from Jenny Bryan's [purrr](https://jennybc.github.io/purrr-tutorial/ls02_map-extraction-advanced.html) tutorial to explore and transform this set of results to a tidy data frame with the metadata and attributes.  Recent versions of RStudio offer a native way of exploring deeply nested list objects and other complicated structures via the Object Browser as detailed in this [blog post](https://blog.rstudio.com/2017/08/22/rstudio-v1-1-preview-object-explorer/).  Another alternative is to use the [`listviewer`](https://github.com/timelyportfolio/listviewer) HTML widget R package to view the list contents inside RStudio and R markdown documents using example code like the following:
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(listviewer)
+
+# check structure at a high level
+listviewer::jsonedit(tmp_contents)
+```
+
+We see that it is necessary to dive in to the `d` component, and within that the `results` component to start getting the data about the files.  First we remove the unneccessary hierarchy so we just got a list of the actual results:
+
+```{r}
+list_results <- tmp_contents %>%
+  flatten() %>%
+  .[["results"]]
+
+listviewer::jsonedit(list_results)
+```
+
+Now this will be easier to work with.  Exploring say the first result we can find the key information we want, such as the file name and which document library it originates from:
+
+```{r}
+str(list_results[[1]], max.level = 1)
+```
+
+```{r}
+str(list_results[[1]][["__metadata"]])
+```
+
+```{r}
+list_results[[1]][["__metadata"]][["media_src"]]
+```
+
+
+Now we can grab the key pieces we want:
+* `VisualizationTypeValue` slot gives us the category associated with the document
+* `Name` gives the file name
+* Within the `__metadata` slot, the `media_src` slot gives the full URL to the file that we can use for downloading the file to isilon
+
+Knowing that we want to only grab Excel files stored in the __Study Build Requirements Visualization__ category, let's create a tidy data frame with key attributes about the files so we can use that to store a registry of sorts:
+
+```{r}
+file_reg <- list_results %>% {
+  tibble(
+    category = map_chr(., "VisualizationTypeValue"),
+    file_name = map_chr(., "Name"),
+    link = map_chr(., c("__metadata", "media_src"))
+  )
+} %>%
+  mutate(link = stringr::str_replace_all(link, " ", "%20"),
+         file_type = tools::file_ext(file_name)) %>%
+  filter(category == "Project Requirements", file_type == "xls")
+
+head(file_reg)
+```
+
+# Downloading files
+
+Now that we have a tidy data set with the appropriate file information, we can utilize the `walk` function from `purrr` to iterate the process of downloading these files to a directory in isilon.  For the purposes of this document we will download the first 10 files to a temporary directory for illustration.
+
+```{r eval=FALSE}
+
+ded_downloader <- function(link, file_name, user_id, password, tmpdir = tempdir(), overwrite = FALSE) {
+  
+  if (!overwrite && file.exists(file.path(tmpdir, file_name))) {
+    message(sprintf("file %s already exists, skipping...", file_name))
+    return(NULL)
+  } else {
+    # use httr::GET with proper authentication
+    result <- httr::GET(link, authenticate(user = sprintf("AM\\%s", user_id), password = password, type = 'ntlm'))
+    
+    # exit with error if status was not successful
+    httr::stop_for_status(result)
+    
+    # write to disk
+    bin <- content(result, "raw")
+    writeBin(bin, file.path(tmpdir, file_name))
+    invisible(httr::http_status(result))
+  }
+}
+
+tmp <- file_reg %>%
+  mutate(row_id = row_number()) %>%
+  split(.$row_id) %>%
+  walk(~ded_downloader(link = .$link, file_name = .$file_name, user_id = user_id, password = get_secret("server_password", key = my_private_key, vault = vault)))
+
+```
+

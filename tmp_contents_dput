@@ -1,0 +1,95 @@
+structure(list(d = structure(list(results = list(structure(list(
+    `__metadata` = structure(list(uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3086)", 
+        etag = "W/\"73\"", type = "Microsoft.SharePoint.DataService.DataElementDefinitionsItem", 
+        edit_media = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3086)/$value", 
+        media_src = "https://mysharepointsite.com/sites/CoolTeam/Documents/Complicated Stuff/CCC_DDD_EEE_V1.xls", 
+        content_type = "application/octetstream", media_etag = "\"{35A87F4B-A3B7-4E04-B9BF-59202675F9C7},73\""), .Names = c("uri", 
+    "etag", "type", "edit_media", "media_src", "content_type", 
+    "media_etag")), ContentTypeID = "0x01010016696741C391094AB5F9403E4E3DB594", 
+    Name = "CCC_DDD_EEE_V1.xls", Title = NULL, DocumentIDValue = "X2KR4FP2XVTT-13-3086", 
+    DocumentID = "https://mysharepointsite.com/sites/CoolTeam/Documents/_layouts/DocIdRedir.aspx?ID=X2KR4FP2XVTT-13-3086, X2KR4FP2XVTT-13-3086", 
+    VisualizationType = structure(list(`__deferred` = structure(list(
+        uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3086)/VisualizationType"), .Names = "uri")), .Names = "__deferred"), 
+    VisualizationTypeValue = "Project Requirements", 
+    Status = structure(list(`__deferred` = structure(list(uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3086)/Status"), .Names = "uri")), .Names = "__deferred"), 
+    StatusValue = "Approved", New_Item_Link_to_JaneDoe = NULL, 
+    Id = 3086L, ContentType = "Document", Created = "/Date(1459765589000)/", 
+    CreatedBy = structure(list(`__deferred` = structure(list(
+        uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3086)/CreatedBy"), .Names = "uri")), .Names = "__deferred"), 
+    CreatedById = 15L, Modified = "/Date(1503308517000)/", ModifiedBy = structure(list(
+        `__deferred` = structure(list(uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3086)/ModifiedBy"), .Names = "uri")), .Names = "__deferred"), 
+    ModifiedById = 28L, CopySource = NULL, ApprovalStatus = "0", 
+    Path = "/sites/GCDMLibraryManagementTeam/Documents/Data Element Definitions", 
+    CheckedOutTo = structure(list(`__deferred` = structure(list(
+        uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3086)/CheckedOutTo"), .Names = "uri")), .Names = "__deferred"), 
+    CheckedOutToId = NULL, VirusStatus = "100864", IsCurrentVersion = TRUE, 
+    Owshiddenversion = 73L, Version = "1.0"), .Names = c("__metadata", 
+"ContentTypeID", "Name", "Title", "DocumentIDValue", "DocumentID", 
+"VisualizationType", "VisualizationTypeValue", "Status", "StatusValue", 
+"New_Item_Link_to_JaneDoe", "Id", "ContentType", "Created", 
+"CreatedBy", "CreatedById", "Modified", "ModifiedBy", "ModifiedById", 
+"CopySource", "ApprovalStatus", "Path", "CheckedOutTo", "CheckedOutToId", 
+"VirusStatus", "IsCurrentVersion", "Owshiddenversion", "Version"
+)), structure(list(`__metadata` = structure(list(uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3089)", 
+    etag = "W/\"73\"", type = "Microsoft.SharePoint.DataService.DataElementDefinitionsItem", 
+    edit_media = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3089)/$value", 
+    media_src = "https://mysharepointsite.com/sites/CoolTeam/Documents/Complicated Stuff/LLL_MMM_BBB_V1.xls", 
+    content_type = "application/octetstream", media_etag = "\"{4D5A86DE-63B7-48AB-9B34-F0F2E96E6FCD},73\""), .Names = c("uri", 
+"etag", "type", "edit_media", "media_src", "content_type", "media_etag"
+)), ContentTypeID = "0x01010016696741C391094AB5F9403E4E3DB594", 
+    Name = "LLL_MMM_BBB_V1.xls", Title = NULL, DocumentIDValue = "X2KR4FP2XVTT-13-3089", 
+    DocumentID = "https://mysharepointsite.com/sites/CoolTeam/Documents/_layouts/DocIdRedir.aspx?ID=X2KR4FP2XVTT-13-3089, X2KR4FP2XVTT-13-3089", 
+    VisualizationType = structure(list(`__deferred` = structure(list(
+        uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3089)/VisualizationType"), .Names = "uri")), .Names = "__deferred"), 
+    VisualizationTypeValue = "Project Requirements", 
+    Status = structure(list(`__deferred` = structure(list(uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3089)/Status"), .Names = "uri")), .Names = "__deferred"), 
+    StatusValue = "Approved", New_Item_Link_to_JaneDoe = NULL, 
+    Id = 3089L, ContentType = "Document", Created = "/Date(1459765591000)/", 
+    CreatedBy = structure(list(`__deferred` = structure(list(
+        uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3089)/CreatedBy"), .Names = "uri")), .Names = "__deferred"), 
+    CreatedById = 15L, Modified = "/Date(1503308525000)/", ModifiedBy = structure(list(
+        `__deferred` = structure(list(uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3089)/ModifiedBy"), .Names = "uri")), .Names = "__deferred"), 
+    ModifiedById = 28L, CopySource = NULL, ApprovalStatus = "0", 
+    Path = "/sites/GCDMLibraryManagementTeam/Documents/Data Element Definitions", 
+    CheckedOutTo = structure(list(`__deferred` = structure(list(
+        uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3089)/CheckedOutTo"), .Names = "uri")), .Names = "__deferred"), 
+    CheckedOutToId = NULL, VirusStatus = "395776", IsCurrentVersion = TRUE, 
+    Owshiddenversion = 73L, Version = "1.0"), .Names = c("__metadata", 
+"ContentTypeID", "Name", "Title", "DocumentIDValue", "DocumentID", 
+"VisualizationType", "VisualizationTypeValue", "Status", "StatusValue", 
+"New_Item_Link_to_JaneDoe", "Id", "ContentType", "Created", 
+"CreatedBy", "CreatedById", "Modified", "ModifiedBy", "ModifiedById", 
+"CopySource", "ApprovalStatus", "Path", "CheckedOutTo", "CheckedOutToId", 
+"VirusStatus", "IsCurrentVersion", "Owshiddenversion", "Version"
+)), structure(list(`__metadata` = structure(list(uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3098)", 
+    etag = "W/\"73\"", type = "Microsoft.SharePoint.DataService.DataElementDefinitionsItem", 
+    edit_media = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3098)/$value", 
+    media_src = "https://mysharepointsite.com/sites/CoolTeam/Documents/Complicated Stuff/AAA_BBB_CCC_V1.xls", 
+    content_type = "application/octetstream", media_etag = "\"{C8DE1BA7-8831-4F00-97B9-4AF6CA866159},73\""), .Names = c("uri", 
+"etag", "type", "edit_media", "media_src", "content_type", "media_etag"
+)), ContentTypeID = "0x01010016696741C391094AB5F9403E4E3DB594", 
+    Name = "AAA_BBB_CCC_V1.xls", Title = NULL, DocumentIDValue = "X2KR4FP2XVTT-13-3098", 
+    DocumentID = "https://mysharepointsite.com/sites/CoolTeam/Documents/_layouts/DocIdRedir.aspx?ID=X2KR4FP2XVTT-13-3098, X2KR4FP2XVTT-13-3098", 
+    VisualizationType = structure(list(`__deferred` = structure(list(
+        uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3098)/VisualizationType"), .Names = "uri")), .Names = "__deferred"), 
+    VisualizationTypeValue = "Project Requirements", 
+    Status = structure(list(`__deferred` = structure(list(uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3098)/Status"), .Names = "uri")), .Names = "__deferred"), 
+    StatusValue = "Approved", New_Item_Link_to_JaneDoe = NULL, 
+    Id = 3098L, ContentType = "Document", Created = "/Date(1459765596000)/", 
+    CreatedBy = structure(list(`__deferred` = structure(list(
+        uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3098)/CreatedBy"), .Names = "uri")), .Names = "__deferred"), 
+    CreatedById = 15L, Modified = "/Date(1503308535000)/", ModifiedBy = structure(list(
+        `__deferred` = structure(list(uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3098)/ModifiedBy"), .Names = "uri")), .Names = "__deferred"), 
+    ModifiedById = 28L, CopySource = NULL, ApprovalStatus = "0", 
+    Path = "/sites/GCDMLibraryManagementTeam/Documents/Data Element Definitions", 
+    CheckedOutTo = structure(list(`__deferred` = structure(list(
+        uri = "https://mysharepointsite.com/sites/CoolTeam/Documents/_vti_bin/ListData.svc/ComplicatedStuff(3098)/CheckedOutTo"), .Names = "uri")), .Names = "__deferred"), 
+    CheckedOutToId = NULL, VirusStatus = "143360", IsCurrentVersion = TRUE, 
+    Owshiddenversion = 73L, Version = "1.0"), .Names = c("__metadata", 
+"ContentTypeID", "Name", "Title", "DocumentIDValue", "DocumentID", 
+"VisualizationType", "VisualizationTypeValue", "Status", "StatusValue", 
+"New_Item_Link_to_JaneDoe", "Id", "ContentType", "Created", 
+"CreatedBy", "CreatedById", "Modified", "ModifiedBy", "ModifiedById", 
+"CopySource", "ApprovalStatus", "Path", "CheckedOutTo", "CheckedOutToId", 
+"VirusStatus", "IsCurrentVersion", "Owshiddenversion", "Version"
+)))), .Names = "results")), .Names = "d")
